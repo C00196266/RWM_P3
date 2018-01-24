@@ -5,6 +5,9 @@
 #include <SDL_ttf.h>
 #include <string>
 #include <iostream>
+#include <vector>
+
+#include "Button.h"
 
 using namespace std;
 
@@ -67,6 +70,13 @@ public:
 	float getWidthWithBorder();
 	float getHeightWithBorder();
 
+	void addButton();
+	void addButton(SDL_Rect rectangle, SDL_Color colour, string message, string fontLocation, int fontSize);
+	void addButtonWithBorder(SDL_Rect rectangle, SDL_Color colour, string message, string fontLocation, int fontSize, int thickness, SDL_Color borderColour);
+	void removeButton(int id);
+
+	vector<Button*> getButtons();
+
 private:
 	SDL_Rect m_boxRectangle;
 	SDL_Color m_boxColour;
@@ -85,4 +95,6 @@ private:
 	int m_distFromBoxEdge;
 
 	string m_message;
+
+	vector<Button*> m_buttons;
 };

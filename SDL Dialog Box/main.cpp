@@ -15,6 +15,8 @@ int main(int argc, char* argv[]) {
 	dialogBox.addBorder(10, SDL_Color{ 50, 50, 170, 255 });
 	dialogBox.setMessageDistFromEdge(10, renderer);
 
+	dialogBox.addButtonWithBorder(SDL_Rect{ 10, 10, 50, 280 }, SDL_Color{ 0, 190, 90, 255 }, "it me weeg", "arial.ttf", 10, 1, SDL_Color{ 0, 0, 0, 255 });
+
 	bool running = true;
 
 	while (running) {

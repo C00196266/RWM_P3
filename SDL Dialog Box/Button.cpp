@@ -1,8 +1,65 @@
 #include "Button.h"
 
 Button::Button() {
-	m_pressed = false;
+	m_rect = SDL_Rect{ 10, 20, 100, 100 };
+	m_colour = SDL_Color{ 205, 205, 205, 255 };
+	m_font = NULL;
+	m_messageSurface = NULL;
+	m_messageTexture = NULL;
+	m_fontSize = 12;
+	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
+	m_fontPos = SDL_Point{ m_rect.x + 3, m_rect.y + 3 };
+	m_distFromBoxEdge = 3;
+	m_borderAdded = false;
 }
+
+Button::Button(int id, SDL_Rect rectangle, SDL_Color boxColour) {
+	m_id = id;
+	m_rect = rectangle;
+	m_colour = boxColour;
+	m_font = NULL;
+	m_messageSurface = NULL;
+	m_messageTexture = NULL;
+	m_fontSize = 12;
+	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
+	m_fontPos = SDL_Point{ m_rect.x + 3, m_rect.y + 3 };
+	m_distFromBoxEdge = 3;
+	m_borderAdded = false;
+}
+
+//Button::Button(int id, SDL_Point position, float width, float height, SDL_Color boxColour) {
+//	m_id = id;
+//	m_rect.x = position.x;
+//	m_rect.y = position.y;
+//	m_rect.w = width;
+//	m_rect.h = height;
+//	m_colour = boxColour;
+//	m_font = NULL;
+//	m_messageSurface = NULL;
+//	m_messageTexture = NULL;
+//	m_fontSize = 12;
+//	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
+//	m_fontPos = SDL_Point{ m_rect.x + 10, m_rect.y + 10 };
+//	m_distFromBoxEdge = 10;
+//	m_borderAdded = false;
+//}
+//
+//Button::Button(int id, float x, float y, float width, float height, SDL_Color boxColour) {
+//	m_id = id;
+//	m_rect.x = x;
+//	m_rect.y = y;
+//	m_rect.w = width;
+//	m_rect.h = height;
+//	m_colour = boxColour;
+//	m_font = NULL;
+//	m_messageSurface = NULL;
+//	m_messageTexture = NULL;
+//	m_fontSize = 12;
+//	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
+//	m_fontPos = SDL_Point{ m_rect.x + 10, m_rect.y + 10 };
+//	m_distFromBoxEdge = 10;
+//	m_borderAdded = false;
+//}
 
 void Button::render(SDL_Renderer *renderer) {
 	if (m_borderAdded == true) {
@@ -21,6 +78,14 @@ void Button::render(SDL_Renderer *renderer) {
 	else {
 		SDL_RenderCopy(renderer, m_messageTexture, NULL, &m_fontRect);
 	}
+}
+
+void Button::setID(int id) {
+	m_id = id;
+}
+
+int Button::getID() {
+	return m_id;
 }
 
 void Button::setPos(SDL_Point pos) {
@@ -73,34 +138,34 @@ float Button::getHeight() {
 	return m_rect.h;
 }
 
-void Button::setButtonColour(SDL_Color colour) {
-	m_colour = colour;
-}
+//void Button::setButtonColour(SDL_Color colour) {
+//	m_colour = colour;
+//}
+//
+//void Button::setButtonColour(float r, float g, float b) {
+//	m_colour.r = r;
+//	m_colour.b = b;
+//	m_colour.g = g;
+//}
+//
+//void Button::setButtonColour(float r, float g, float b, float a) {
+//	m_colour.r = r;
+//	m_colour.b = b;
+//	m_colour.g = g;
+//	m_colour.a = a;
+//}
 
-void Button::setButtonColour(float r, float g, float b) {
-	m_colour.r = r;
-	m_colour.b = b;
-	m_colour.g = g;
-}
+//void Button::setButtonAlpha(float a) {
+//	m_colour.a = a;
+//}
+//
+//SDL_Color Button::getButtonColour() {
+//	return m_colour;
+//}
 
-void Button::setButtonColour(float r, float g, float b, float a) {
-	m_colour.r = r;
-	m_colour.b = b;
-	m_colour.g = g;
-	m_colour.a = a;
-}
-
-void Button::setButtonAlpha(float a) {
-	m_colour.a = a;
-}
-
-SDL_Color Button::getButtonColour() {
-	return m_colour;
-}
-
-void Button::setFont(TTF_Font *font) {
-	m_font = font;
-}
+//void Button::setFont(TTF_Font *font) {
+//	m_font = font;
+//}
 
 void Button::setFont(string fontFileLocation, float size) {
 	m_fontSize = size;
@@ -113,39 +178,39 @@ void Button::setFont(string fontFileLocation, float size) {
 	}
 }
 
-void Button::setFontSize(int size) {
-	m_fontSize = size;
-}
-
-void Button::setFontColour(SDL_Color colour) {
-	m_fontColour = colour;
-}
-
-void Button::setFontPos(SDL_Point pos) {
-	m_fontPos = pos;
-}
-
-void Button::setFontPos(float x, float y) {
-	m_fontPos.x = x;
-	m_fontPos.y = y;
-}
-
-void Button::setFontColour(float r, float g, float b) {
-	m_fontColour.r = r;
-	m_fontColour.b = b;
-	m_fontColour.g = g;
-}
-
-void Button::setFontColour(float r, float g, float b, float a) {
-	m_fontColour.r = r;
-	m_fontColour.b = b;
-	m_fontColour.g = g;
-	m_fontColour.a = a;
-}
-
-void Button::setFontAlpha(float a) {
-	m_fontColour.a = a;
-}
+//void Button::setFontSize(int size) {
+//	m_fontSize = size;
+//}
+//
+//void Button::setFontColour(SDL_Color colour) {
+//	m_fontColour = colour;
+//}
+//
+//void Button::setFontPos(SDL_Point pos) {
+//	m_fontPos = pos;
+//}
+//
+//void Button::setFontPos(float x, float y) {
+//	m_fontPos.x = x;
+//	m_fontPos.y = y;
+//}
+//
+//void Button::setFontColour(float r, float g, float b) {
+//	m_fontColour.r = r;
+//	m_fontColour.b = b;
+//	m_fontColour.g = g;
+//}
+//
+//void Button::setFontColour(float r, float g, float b, float a) {
+//	m_fontColour.r = r;
+//	m_fontColour.b = b;
+//	m_fontColour.g = g;
+//	m_fontColour.a = a;
+//}
+//
+//void Button::setFontAlpha(float a) {
+//	m_fontColour.a = a;
+//}
 
 SDL_Color Button::getFontColour() {
 	return m_fontColour;
@@ -157,6 +222,14 @@ SDL_Point Button::getFontLocalPos() {
 
 SDL_Point Button::getFontGlobalPos() {
 	return m_fontPos;
+}
+
+void Button::setMessage(string message) {
+	m_message = message;
+}
+
+string Button::getMessage() {
+	return m_message;
 }
 
 void Button::setMessageDistFromEdge(int dist, SDL_Renderer *renderer) {
