@@ -120,11 +120,13 @@
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="DialogBox.cpp" />
+    <ClCompile Include="InputField.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="DialogBox.h" />
+    <ClInclude Include="InputField.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

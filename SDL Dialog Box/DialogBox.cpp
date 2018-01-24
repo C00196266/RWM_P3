@@ -24,6 +24,9 @@ DialogBox::DialogBox(SDL_Rect rectangle, SDL_Color boxColour) {
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
 	m_distFromBoxEdge = 10;
 	m_borderAdded = false;
+
+	m_allowKeyPress = true;
+	inputField = new InputField();
 }
 
 DialogBox::DialogBox(SDL_Point position, float width, float height, SDL_Color boxColour) {
@@ -59,11 +62,11 @@ DialogBox::DialogBox(float x, float y, float width, float height, SDL_Color boxC
 }
 
 void DialogBox::update() {
-	for (int i = 0; i < m_buttons.size(); i++) {
-		if (m_buttons.at(i)->getPressed() == false) {
-			m_buttons.at(i)->update(m_eventPosition);
-		}
-	}
+	//for (int i = 0; i < m_buttons.size(); i++) {
+	//	if (m_buttons.at(i)->getPressed() == false) {
+	//		m_buttons.at(i)->update(m_eventPosition);
+	//	}
+	//}
 }
 
 void DialogBox::getInputs(SDL_Event &e) {
@@ -71,21 +74,61 @@ void DialogBox::getInputs(SDL_Event &e) {
 	case SDL_FINGERDOWN:
 		m_eventPosition.x = e.tfinger.x * m_windowWidth;
 		m_eventPosition.y = e.tfinger.y * m_windowHeight;
+
+		for (int i = 0; i < m_buttons.size(); i++) {
+			if (m_buttons.at(i)->getPressed() == false) {
+				m_buttons.at(i)->update(m_eventPosition);
+			}
+		}
+
 		break;
 
-	case SDL_FINGERUP:
-		m_eventPosition.x = -100;
-		m_eventPosition.y = -100;
-		break;
+	//case SDL_FINGERUP:
+	//	m_eventPosition.x = -100;
+	//	m_eventPosition.y = -100;
+	//	break;
 
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&m_eventPosition.x, &m_eventPosition.y);
+
+		if (m_buttons.empty() == false) {
+			for (int i = 0; i < m_buttons.size(); i++) {
+				if (m_buttons.at(i)->getPressed() == false) {
+					m_buttons.at(i)->update(m_eventPosition);
+				}
+			}
+		}
+
 		break;
 
-	case SDL_MOUSEBUTTONUP:
-		m_eventPosition.x = -100;
-		m_eventPosition.y = -100;
+	case SDL_TEXTINPUT:
+		if (m_allowKeyPress == true) {
+			inputField->appendToMessage(e.text.text);
+			m_allowKeyPress = false;
+		}
+
 		break;
+
+	case SDL_KEYDOWN:
+		switch (e.key.keysym.sym) {
+		case SDLK_BACKSPACE:
+			if (m_allowKeyPress == true)
+			{
+				inputField->removeEndCharacter();
+				m_allowKeyPress = false;
+			}
+			break;
+		}
+		break;
+
+	case SDL_KEYUP:
+		m_allowKeyPress = true;
+		break;
+
+	//case SDL_MOUSEBUTTONUP:
+	//	m_eventPosition.x = -100;
+	//	m_eventPosition.y = -100;
+	//	break;
 	}
 }
 
@@ -269,9 +312,11 @@ void DialogBox::generateFontSurface(SDL_Renderer *renderer) {
 }
 
 void DialogBox::addBorder(int thickness, SDL_Color colour) {
-	m_borderRectangle = SDL_Rect{ m_boxRectangle.x - thickness, m_boxRectangle.y - thickness, m_boxRectangle.w + (thickness * 2) , m_boxRectangle.h + (thickness * 2) };
-	m_borderColour = colour;
-	m_borderAdded = true;
+	if (m_borderAdded == false) {
+		m_borderRectangle = SDL_Rect{ m_boxRectangle.x - thickness, m_boxRectangle.y - thickness, m_boxRectangle.w + (thickness * 2) , m_boxRectangle.h + (thickness * 2) };
+		m_borderColour = colour;
+		m_borderAdded = true;
+	}
 }
 
 SDL_Point DialogBox::getPosWithBorder() {

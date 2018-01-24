@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Button.h"
+#include "InputField.h"
 
 using namespace std;
 
@@ -101,9 +102,12 @@ private:
 	string m_message;
 
 	vector<Button*> m_buttons;
+	InputField *inputField;
 
 	int m_windowWidth;
 	int m_windowHeight;
 
 	SDL_Point m_eventPosition;
+
+	bool m_allowKeyPress;
 };

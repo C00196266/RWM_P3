@@ -220,9 +220,9 @@ void Button::setFont(string fontFileLocation, float size) {
 //	m_fontColour.a = a;
 //}
 
-SDL_Color Button::getFontColour() {
-	return m_fontColour;
-}
+//SDL_Color Button::getFontColour() {
+//	return m_fontColour;
+//
 
 SDL_Point Button::getFontLocalPos() {
 	return SDL_Point{ m_fontPos.x - m_rect.x, m_fontPos.y - m_rect.y };
@@ -257,9 +257,11 @@ void Button::generateFontSurface(SDL_Renderer *renderer) {
 }
 
 void Button::addBorder(int thickness, SDL_Color colour) {
-	m_borderRectangle = SDL_Rect{ m_rect.x - thickness, m_rect.y - thickness, m_rect.w + (thickness * 2) , m_rect.h + (thickness * 2) };
-	m_borderColour = colour;
-	m_borderAdded = true;
+	if (m_borderAdded == false) {
+		m_borderRectangle = SDL_Rect{ m_rect.x - thickness, m_rect.y - thickness, m_rect.w + (thickness * 2) , m_rect.h + (thickness * 2) };
+		m_borderColour = colour;
+		m_borderAdded = true;
+	}
 }
 
 SDL_Point Button::getGlobalPosWithBorder() {
