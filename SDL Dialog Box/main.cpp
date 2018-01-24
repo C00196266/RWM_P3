@@ -11,6 +11,8 @@ int main(int argc, char* argv[]) {
 
 	DialogBox dialogBox;
 	dialogBox.setFont("arial.ttf");
+	dialogBox.setMessage("Ayyyy");
+	dialogBox.addBorder(1, SDL_Color{ 50, 50, 170, 255 });
 
 	bool running = true;
 
