@@ -148,7 +148,9 @@ void DialogBox::setFont(TTF_Font *font) {
 	m_font = font;
 }
 
-void DialogBox::setFont(string fontFileLocation) {
+void DialogBox::setFont(string fontFileLocation, float size) {
+	m_fontSize = size;
+
 	if (!TTF_OpenFont(fontFileLocation.c_str(), m_fontSize)) {
 		cout << "Could not load font at " << fontFileLocation << endl;
 	}
@@ -212,7 +214,7 @@ string DialogBox::getMessage() {
 }
 
 void DialogBox::generateFontSurface(SDL_Renderer *renderer) {
-	m_messageSurface = TTF_RenderText_Solid(m_font, m_message.c_str(), m_fontColour);
+	m_messageSurface = TTF_RenderText_Blended_Wrapped(m_font, m_message.c_str(), m_fontColour, 480);
 	m_messageTexture = SDL_CreateTextureFromSurface(renderer, m_messageSurface);
 	m_fontRect = SDL_Rect{ m_fontPos.x, m_fontPos.y, m_messageSurface->w, m_messageSurface->h };
 }

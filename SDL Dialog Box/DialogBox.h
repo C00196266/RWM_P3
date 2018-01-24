@@ -40,7 +40,7 @@ public:
 	SDL_Color getDialogBoxColour();
 
 	void setFont(TTF_Font *font);
-	void setFont(string fontFileLocation);
+	void setFont(string fontFileLocation, float size);
 	void setFontSize(int size);
 	void setFontPos(SDL_Point pos);
 	void setFontPos(float x, float y);

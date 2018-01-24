@@ -10,8 +10,8 @@ int main(int argc, char* argv[]) {
 	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
 	DialogBox dialogBox(SDL_Rect{ 10, 10, 500, 400 }, SDL_Color{ 150, 150, 150, 255 });
-	dialogBox.setFont("arial.ttf");
-	dialogBox.setMessage("Ayyyy");
+	dialogBox.setFont("arial.ttf", 10);
+	dialogBox.setMessage("Ayyyyyyyyyyyyyyyyyy it a me gren maro, coming at you live from Keemstar's HQ");
 	dialogBox.addBorder(1, SDL_Color{ 50, 50, 170, 255 });
 
 	bool running = true;
