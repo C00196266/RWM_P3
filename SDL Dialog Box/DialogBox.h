@@ -11,9 +11,9 @@ using namespace std;
 class DialogBox {
 public:
 	DialogBox();
-	DialogBox(SDL_Rect rectangle, SDL_Color boxColour, SDL_Color fontColour);
-	DialogBox(SDL_Point position, float width, float height, SDL_Color boxColour, SDL_Color fontColour);
-	DialogBox(float x, float y, float width, float height, SDL_Color boxColour, SDL_Color fontColour);
+	DialogBox(SDL_Rect rectangle, SDL_Color boxColour);
+	DialogBox(SDL_Point position, float width, float height, SDL_Color boxColour);
+	DialogBox(float x, float y, float width, float height, SDL_Color boxColour);
 
 	void render(SDL_Renderer *renderer);
 

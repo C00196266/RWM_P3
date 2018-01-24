@@ -1,7 +1,7 @@
 #include "DialogBox.h"
 
 DialogBox::DialogBox() {
-	m_boxRectangle = SDL_Rect{ 10, 20, 100, 10 };
+	m_boxRectangle = SDL_Rect{ 10, 20, 100, 100 };
 	m_boxColour = SDL_Color{ 205, 205, 205, 255 };
 	m_font = NULL;
 	m_messageSurface = NULL;
@@ -12,19 +12,19 @@ DialogBox::DialogBox() {
 	m_borderAdded = false;
 }
 
-DialogBox::DialogBox(SDL_Rect rectangle, SDL_Color boxColour, SDL_Color fontColour) {
+DialogBox::DialogBox(SDL_Rect rectangle, SDL_Color boxColour) {
 	m_boxRectangle = rectangle;
 	m_boxColour = boxColour;
 	m_font = NULL;
 	m_messageSurface = NULL;
 	m_messageTexture = NULL;
 	m_fontSize = 12;
-	m_fontColour = fontColour;
+	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
 	m_borderAdded = false;
 }
 
-DialogBox::DialogBox(SDL_Point position, float width, float height, SDL_Color boxColour, SDL_Color fontColour) {
+DialogBox::DialogBox(SDL_Point position, float width, float height, SDL_Color boxColour) {
 	m_boxRectangle.x = position.x;
 	m_boxRectangle.y = position.y;
 	m_boxRectangle.w = width;
@@ -34,12 +34,12 @@ DialogBox::DialogBox(SDL_Point position, float width, float height, SDL_Color bo
 	m_messageSurface = NULL;
 	m_messageTexture = NULL;
 	m_fontSize = 12;
-	m_fontColour = fontColour;
+	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
 	m_borderAdded = false;
 }
 
-DialogBox::DialogBox(float x, float y, float width, float height, SDL_Color boxColour, SDL_Color fontColour) {
+DialogBox::DialogBox(float x, float y, float width, float height, SDL_Color boxColour) {
 	m_boxRectangle.x = x;
 	m_boxRectangle.y = y;
 	m_boxRectangle.w = width;
@@ -49,7 +49,7 @@ DialogBox::DialogBox(float x, float y, float width, float height, SDL_Color boxC
 	m_messageSurface = NULL;
 	m_messageTexture = NULL;
 	m_fontSize = 12;
-	m_fontColour = fontColour;
+	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
 	m_borderAdded = false;
 }
