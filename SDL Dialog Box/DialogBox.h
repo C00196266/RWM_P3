@@ -18,6 +18,8 @@ public:
 	DialogBox(SDL_Point position, float width, float height, SDL_Color boxColour);
 	DialogBox(float x, float y, float width, float height, SDL_Color boxColour);
 
+	void update();
+	void getInputs(SDL_Event &e);
 	void render(SDL_Renderer *renderer);
 
 	void setPos(SDL_Point pos);
@@ -77,6 +79,8 @@ public:
 
 	vector<Button*> getButtons();
 
+	void setWindowSize(int width, int height);
+
 private:
 	SDL_Rect m_boxRectangle;
 	SDL_Color m_boxColour;
@@ -97,4 +101,9 @@ private:
 	string m_message;
 
 	vector<Button*> m_buttons;
+
+	int m_windowWidth;
+	int m_windowHeight;
+
+	SDL_Point m_eventPosition;
 };

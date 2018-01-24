@@ -58,6 +58,37 @@ DialogBox::DialogBox(float x, float y, float width, float height, SDL_Color boxC
 	m_borderAdded = false;
 }
 
+void DialogBox::update() {
+	for (int i = 0; i < m_buttons.size(); i++) {
+		if (m_buttons.at(i)->getPressed() == false) {
+			m_buttons.at(i)->update(m_eventPosition);
+		}
+	}
+}
+
+void DialogBox::getInputs(SDL_Event &e) {
+	switch (e.type) {
+	case SDL_FINGERDOWN:
+		m_eventPosition.x = e.tfinger.x * m_windowWidth;
+		m_eventPosition.y = e.tfinger.y * m_windowHeight;
+		break;
+
+	case SDL_FINGERUP:
+		m_eventPosition.x = -100;
+		m_eventPosition.y = -100;
+		break;
+
+	case SDL_MOUSEBUTTONDOWN:
+		SDL_GetMouseState(&m_eventPosition.x, &m_eventPosition.y);
+		break;
+
+	case SDL_MOUSEBUTTONUP:
+		m_eventPosition.x = -100;
+		m_eventPosition.y = -100;
+		break;
+	}
+}
+
 void DialogBox::render(SDL_Renderer *renderer) {
 	if (m_borderAdded == true) {
 		SDL_SetRenderDrawColor(renderer, m_borderColour.r, m_borderColour.g, m_borderColour.b, m_borderColour.a);
@@ -291,4 +322,9 @@ void DialogBox::removeButton(int id) {
 
 vector<Button*> DialogBox::getButtons() {
 	return m_buttons;
+}
+
+void DialogBox::setWindowSize(int width, int height) {
+	m_windowWidth = width;
+	m_windowHeight = height;
 }

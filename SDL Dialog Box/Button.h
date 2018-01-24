@@ -11,9 +11,10 @@ class Button {
 public:
 	Button();
 	Button(int id, SDL_Rect rectangle, SDL_Color boxColour);
-	Button(int id, SDL_Point position, float width, float height, SDL_Color boxColour);
-	Button(int id, float x, float y, float width, float height, SDL_Color boxColour);
+	//Button(int id, SDL_Point position, float width, float height, SDL_Color boxColour);
+	//Button(int id, float x, float y, float width, float height, SDL_Color boxColour);
 
+	void update(SDL_Point eventPosition);
 	void render(SDL_Renderer *renderer);
 
 	void setID(int id);

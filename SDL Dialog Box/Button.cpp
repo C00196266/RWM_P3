@@ -11,6 +11,7 @@ Button::Button() {
 	m_fontPos = SDL_Point{ m_rect.x + 3, m_rect.y + 3 };
 	m_distFromBoxEdge = 3;
 	m_borderAdded = false;
+	m_pressed = false;
 }
 
 Button::Button(int id, SDL_Rect rectangle, SDL_Color boxColour) {
@@ -25,6 +26,7 @@ Button::Button(int id, SDL_Rect rectangle, SDL_Color boxColour) {
 	m_fontPos = SDL_Point{ m_rect.x + 3, m_rect.y + 3 };
 	m_distFromBoxEdge = 3;
 	m_borderAdded = false;
+	m_pressed = false;
 }
 
 //Button::Button(int id, SDL_Point position, float width, float height, SDL_Color boxColour) {
@@ -60,6 +62,12 @@ Button::Button(int id, SDL_Rect rectangle, SDL_Color boxColour) {
 //	m_distFromBoxEdge = 10;
 //	m_borderAdded = false;
 //}
+
+void Button::update(SDL_Point eventPosition) {
+	if (SDL_PointInRect(&eventPosition, &m_rect) == true) {
+		m_pressed = true;
+	}
+}
 
 void Button::render(SDL_Renderer *renderer) {
 	if (m_borderAdded == true) {
