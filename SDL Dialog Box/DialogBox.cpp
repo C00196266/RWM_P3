@@ -11,6 +11,7 @@ DialogBox::DialogBox() {
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10};
 	m_distFromBoxEdge = 10;
 	m_borderAdded = false;
+	m_allowKeyPress = true;
 }
 
 DialogBox::DialogBox(SDL_Rect rectangle, SDL_Color boxColour) {
@@ -24,9 +25,7 @@ DialogBox::DialogBox(SDL_Rect rectangle, SDL_Color boxColour) {
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
 	m_distFromBoxEdge = 10;
 	m_borderAdded = false;
-
 	m_allowKeyPress = true;
-	inputField = new InputField();
 }
 
 DialogBox::DialogBox(SDL_Point position, float width, float height, SDL_Color boxColour) {
@@ -43,6 +42,7 @@ DialogBox::DialogBox(SDL_Point position, float width, float height, SDL_Color bo
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
 	m_distFromBoxEdge = 10;
 	m_borderAdded = false;
+	m_allowKeyPress = true;
 }
 
 DialogBox::DialogBox(float x, float y, float width, float height, SDL_Color boxColour) {
@@ -59,17 +59,10 @@ DialogBox::DialogBox(float x, float y, float width, float height, SDL_Color boxC
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
 	m_distFromBoxEdge = 10;
 	m_borderAdded = false;
+	m_allowKeyPress = true;
 }
 
-void DialogBox::update() {
-	//for (int i = 0; i < m_buttons.size(); i++) {
-	//	if (m_buttons.at(i)->getPressed() == false) {
-	//		m_buttons.at(i)->update(m_eventPosition);
-	//	}
-	//}
-}
-
-void DialogBox::getInputs(SDL_Event &e) {
+void DialogBox::getInputs(SDL_Event &e, SDL_Renderer *renderer) {
 	switch (e.type) {
 	case SDL_FINGERDOWN:
 		m_eventPosition.x = e.tfinger.x * m_windowWidth;
@@ -80,13 +73,7 @@ void DialogBox::getInputs(SDL_Event &e) {
 				m_buttons.at(i)->update(m_eventPosition);
 			}
 		}
-
 		break;
-
-	//case SDL_FINGERUP:
-	//	m_eventPosition.x = -100;
-	//	m_eventPosition.y = -100;
-	//	break;
 
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&m_eventPosition.x, &m_eventPosition.y);
@@ -102,9 +89,12 @@ void DialogBox::getInputs(SDL_Event &e) {
 		break;
 
 	case SDL_TEXTINPUT:
-		if (m_allowKeyPress == true) {
-			inputField->appendToMessage(e.text.text);
-			m_allowKeyPress = false;
+		if (m_inputField != NULL) {
+			if (m_allowKeyPress == true) {
+				m_inputField->appendToMessage(e.text.text);
+				m_inputField->generateFontSurface(renderer);
+				m_allowKeyPress = false;
+			}
 		}
 
 		break;
@@ -112,10 +102,13 @@ void DialogBox::getInputs(SDL_Event &e) {
 	case SDL_KEYDOWN:
 		switch (e.key.keysym.sym) {
 		case SDLK_BACKSPACE:
-			if (m_allowKeyPress == true)
-			{
-				inputField->removeEndCharacter();
-				m_allowKeyPress = false;
+			if (m_inputField != NULL) {
+				if (m_allowKeyPress == true)
+				{
+					m_inputField->removeEndCharacter();
+					m_inputField->generateFontSurface(renderer);
+					m_allowKeyPress = false;
+				}
 			}
 			break;
 		}
@@ -124,11 +117,6 @@ void DialogBox::getInputs(SDL_Event &e) {
 	case SDL_KEYUP:
 		m_allowKeyPress = true;
 		break;
-
-	//case SDL_MOUSEBUTTONUP:
-	//	m_eventPosition.x = -100;
-	//	m_eventPosition.y = -100;
-	//	break;
 	}
 }
 
@@ -150,8 +138,14 @@ void DialogBox::render(SDL_Renderer *renderer) {
 		SDL_RenderCopy(renderer, m_messageTexture, NULL, &m_fontRect);
 	}
 
-	for (int i = 0; i < m_buttons.size(); i++) {
-		m_buttons.at(i)->render(renderer);
+	if (m_buttons.empty() == false) {
+		for (int i = 0; i < m_buttons.size(); i++) {
+			m_buttons.at(i)->render(renderer);
+		}
+	}
+
+	if (m_inputField != NULL) {
+		m_inputField->render(renderer);
 	}
 }
 
@@ -367,6 +361,21 @@ void DialogBox::removeButton(int id) {
 
 vector<Button*> DialogBox::getButtons() {
 	return m_buttons;
+}
+
+void DialogBox::addInputField(SDL_Rect rectangle, string fontLocation, int fontSize) {
+	m_inputField = new InputField(rectangle);
+	m_inputField->setFont(fontLocation, fontSize);
+}
+
+void DialogBox::addInputFieldWithBorder(SDL_Rect rectangle, int thickness, SDL_Color borderColour, string fontLocation, int fontSize) {
+	m_inputField = new InputField(rectangle);
+	m_inputField->setFont(fontLocation, fontSize);
+	m_inputField->addBorder(thickness, borderColour);
+}
+
+void DialogBox::removeInputField() {
+	delete m_inputField;
 }
 
 void DialogBox::setWindowSize(int width, int height) {

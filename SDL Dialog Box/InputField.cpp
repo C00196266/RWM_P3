@@ -113,7 +113,12 @@ void InputField::setFont(string fontFileLocation, float size) {
 void InputField::generateFontSurface(SDL_Renderer *renderer) {
 	m_messageSurface = TTF_RenderText_Blended_Wrapped(m_font, m_message.c_str(), m_fontColour, m_rect.w - (m_distFromBoxEdge * 2));
 	m_messageTexture = SDL_CreateTextureFromSurface(renderer, m_messageSurface);
-	m_fontRect = SDL_Rect{ m_fontPos.x, m_fontPos.y, m_messageSurface->w, m_messageSurface->h };
+	if (m_messageSurface != NULL) {
+		m_fontRect = SDL_Rect{ m_fontPos.x, m_fontPos.y, m_messageSurface->w, m_messageSurface->h };
+	}
+	else {
+		m_fontRect = SDL_Rect{ m_fontPos.x, m_fontPos.y, 0, 0 };
+	}
 }
 
 void InputField::setMessageDistFromEdge(int dist) {
