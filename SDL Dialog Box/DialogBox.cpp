@@ -9,6 +9,7 @@ DialogBox::DialogBox() {
 	m_fontSize = 12;
 	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10};
+	m_distFromBoxEdge = 10;
 	m_borderAdded = false;
 }
 
@@ -21,6 +22,7 @@ DialogBox::DialogBox(SDL_Rect rectangle, SDL_Color boxColour) {
 	m_fontSize = 12;
 	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
+	m_distFromBoxEdge = 10;
 	m_borderAdded = false;
 }
 
@@ -36,6 +38,7 @@ DialogBox::DialogBox(SDL_Point position, float width, float height, SDL_Color bo
 	m_fontSize = 12;
 	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
+	m_distFromBoxEdge = 10;
 	m_borderAdded = false;
 }
 
@@ -51,6 +54,7 @@ DialogBox::DialogBox(float x, float y, float width, float height, SDL_Color boxC
 	m_fontSize = 12;
 	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
 	m_fontPos = SDL_Point{ m_boxRectangle.x + 10, m_boxRectangle.y + 10 };
+	m_distFromBoxEdge = 10;
 	m_borderAdded = false;
 }
 
@@ -213,8 +217,18 @@ string DialogBox::getMessage() {
 	return m_message;
 }
 
+void DialogBox::setMessageDistFromEdge(int dist, SDL_Renderer *renderer) {
+	m_distFromBoxEdge = dist;
+	m_fontPos = SDL_Point{ m_boxRectangle.x + m_distFromBoxEdge, m_boxRectangle.y + m_distFromBoxEdge };
+	generateFontSurface(renderer);
+}
+
+int DialogBox::getMessageDistFromEdge() {
+	return m_distFromBoxEdge;
+}
+
 void DialogBox::generateFontSurface(SDL_Renderer *renderer) {
-	m_messageSurface = TTF_RenderText_Blended_Wrapped(m_font, m_message.c_str(), m_fontColour, 480);
+	m_messageSurface = TTF_RenderText_Blended_Wrapped(m_font, m_message.c_str(), m_fontColour, m_boxRectangle.w - (m_distFromBoxEdge * 2));
 	m_messageTexture = SDL_CreateTextureFromSurface(renderer, m_messageSurface);
 	m_fontRect = SDL_Rect{ m_fontPos.x, m_fontPos.y, m_messageSurface->w, m_messageSurface->h };
 }

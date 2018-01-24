@@ -55,6 +55,9 @@ public:
 	void setMessage(string message);
 	string getMessage();
 
+	void setMessageDistFromEdge(int dist, SDL_Renderer *renderer);
+	int getMessageDistFromEdge();
+
 	void generateFontSurface(SDL_Renderer *renderer);
 
 	void addBorder(int thickness, SDL_Color colour);
@@ -79,6 +82,7 @@ private:
 	SDL_Surface* m_messageSurface;
 	SDL_Texture* m_messageTexture;
 	SDL_Rect m_fontRect;
+	int m_distFromBoxEdge;
 
 	string m_message;
 };
