@@ -111,6 +111,16 @@ void DialogBox::getInputs(SDL_Event &e, SDL_Renderer *renderer) {
 				}
 			}
 			break;
+
+		case SDLK_RETURN:
+			if (m_inputField != NULL) {
+				if (m_allowKeyPress == true)
+				{
+					m_inputField->writeToFile();
+					m_inputField->generateFontSurface(renderer);
+					m_allowKeyPress = false;
+				}
+			}
 		}
 		break;
 
@@ -361,6 +371,10 @@ void DialogBox::removeButton(int id) {
 
 vector<Button*> DialogBox::getButtons() {
 	return m_buttons;
+}
+
+InputField* DialogBox::getInputField() {
+	return m_inputField;
 }
 
 void DialogBox::addInputField(SDL_Rect rectangle, string fontLocation, int fontSize) {

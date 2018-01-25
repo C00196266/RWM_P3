@@ -167,3 +167,24 @@ void InputField::removeEndCharacter() {
 		m_message.pop_back();
 	}
 }
+
+void InputField::writeToFile() {
+	fstream file;
+
+	file.open("inputed_messages.txt");
+
+	if (!file) {
+		ofstream output("inputed_messages.txt");
+
+		output << m_message << "\n";
+
+		output.close();
+	}
+	else {
+		file << m_message << endl;;
+	}
+
+	file.close();
+
+	m_message.clear();
+}

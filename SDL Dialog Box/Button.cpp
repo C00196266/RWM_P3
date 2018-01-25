@@ -29,40 +29,6 @@ Button::Button(int id, SDL_Rect rectangle, SDL_Color boxColour) {
 	m_pressed = false;
 }
 
-//Button::Button(int id, SDL_Point position, float width, float height, SDL_Color boxColour) {
-//	m_id = id;
-//	m_rect.x = position.x;
-//	m_rect.y = position.y;
-//	m_rect.w = width;
-//	m_rect.h = height;
-//	m_colour = boxColour;
-//	m_font = NULL;
-//	m_messageSurface = NULL;
-//	m_messageTexture = NULL;
-//	m_fontSize = 12;
-//	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
-//	m_fontPos = SDL_Point{ m_rect.x + 10, m_rect.y + 10 };
-//	m_distFromBoxEdge = 10;
-//	m_borderAdded = false;
-//}
-//
-//Button::Button(int id, float x, float y, float width, float height, SDL_Color boxColour) {
-//	m_id = id;
-//	m_rect.x = x;
-//	m_rect.y = y;
-//	m_rect.w = width;
-//	m_rect.h = height;
-//	m_colour = boxColour;
-//	m_font = NULL;
-//	m_messageSurface = NULL;
-//	m_messageTexture = NULL;
-//	m_fontSize = 12;
-//	m_fontColour = SDL_Color{ 0, 0, 0, 255 };
-//	m_fontPos = SDL_Point{ m_rect.x + 10, m_rect.y + 10 };
-//	m_distFromBoxEdge = 10;
-//	m_borderAdded = false;
-//}
-
 void Button::update(SDL_Point eventPosition) {
 	if (SDL_PointInRect(&eventPosition, &m_rect) == true) {
 		m_pressed = true;

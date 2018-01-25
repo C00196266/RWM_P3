@@ -79,6 +79,8 @@ public:
 
 	vector<Button*> getButtons();
 
+	InputField* getInputField();
+
 	void addInputField(SDL_Rect rectangle, string fontLocation, int fontSize);
 	void addInputFieldWithBorder(SDL_Rect rectangle, int thickness, SDL_Color borderColour, string fontLocation, int fontSize);
 	void removeInputField();

@@ -4,6 +4,7 @@
 #include <SDL_ttf.h>
 #include <string>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -45,6 +46,8 @@ public:
 
 	void appendToMessage(char *character);
 	void removeEndCharacter();
+
+	void writeToFile();
 
 	//void setSelected(bool selected);
 	//bool getSelected();
