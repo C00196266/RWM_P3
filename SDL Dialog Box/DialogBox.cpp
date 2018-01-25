@@ -73,10 +73,17 @@ void DialogBox::getInputs(SDL_Event &e, SDL_Renderer *renderer) {
 				m_buttons.at(i)->update(m_eventPosition);
 			}
 		}
+
+		if (m_inputFields.empty() == false) {
+			for (int i = 0; i < m_inputFields.size(); i++) {
+				m_inputFields.at(i)->update(m_eventPosition);
+			}
+		}
+
 		break;
 
 	case SDL_FINGERUP:
-		m_eventPosition = { -100, -100 };
+		m_eventPosition = { -1000, -1000 };
 
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&m_eventPosition.x, &m_eventPosition.y);
@@ -89,17 +96,27 @@ void DialogBox::getInputs(SDL_Event &e, SDL_Renderer *renderer) {
 			}
 		}
 
+		if (m_inputFields.empty() == false) {
+			for (int i = 0; i < m_inputFields.size(); i++) {
+				m_inputFields.at(i)->update(m_eventPosition);
+			}
+		}
+
 		break;
 
 	case SDL_MOUSEBUTTONUP:
-		m_eventPosition = { -100, -100 };
+		m_eventPosition = { -1000, -1000 };
 
 	case SDL_TEXTINPUT:
-		if (m_inputField != NULL) {
-			if (m_allowKeyPress == true) {
-				m_inputField->appendToMessage(e.text.text);
-				m_inputField->generateFontSurface(renderer);
-				m_allowKeyPress = false;
+		if (m_allowKeyPress == true) {
+			if (m_inputFields.empty() == false) {
+				for (int i = 0; i < m_inputFields.size(); i++) {
+					if (m_inputFields.at(i)->getSelected() == true) {
+						m_inputFields.at(i)->appendToMessage(e.text.text);
+						m_inputFields.at(i)->generateFontSurface(renderer);
+						m_allowKeyPress = false;
+					}
+				}
 			}
 		}
 
@@ -108,23 +125,29 @@ void DialogBox::getInputs(SDL_Event &e, SDL_Renderer *renderer) {
 	case SDL_KEYDOWN:
 		switch (e.key.keysym.sym) {
 		case SDLK_BACKSPACE:
-			if (m_inputField != NULL) {
-				if (m_allowKeyPress == true)
-				{
-					m_inputField->removeEndCharacter();
-					m_inputField->generateFontSurface(renderer);
-					m_allowKeyPress = false;
+			if (m_allowKeyPress == true) {
+				if (m_inputFields.empty() == false) {
+					for (int i = 0; i < m_inputFields.size(); i++) {
+						if (m_inputFields.at(i)->getSelected() == true) {
+							m_inputFields.at(i)->removeEndCharacter();
+							m_inputFields.at(i)->generateFontSurface(renderer);
+							m_allowKeyPress = false;
+						}
+					}
 				}
 			}
 			break;
 
 		case SDLK_RETURN:
-			if (m_inputField != NULL) {
-				if (m_allowKeyPress == true)
-				{
-					m_inputField->writeToFile();
-					m_inputField->generateFontSurface(renderer);
-					m_allowKeyPress = false;
+			if (m_allowKeyPress == true) {
+				if (m_inputFields.empty() == false) {
+					for (int i = 0; i < m_inputFields.size(); i++) {
+						if (m_inputFields.at(i)->getSelected() == true) {
+							m_inputFields.at(i)->writeToFile();
+							m_inputFields.at(i)->generateFontSurface(renderer);
+							m_allowKeyPress = false;
+						}
+					}
 				}
 			}
 		}
@@ -160,8 +183,10 @@ void DialogBox::render(SDL_Renderer *renderer) {
 		}
 	}
 
-	if (m_inputField != NULL) {
-		m_inputField->render(renderer);
+	if (m_inputFields.empty() == false) {
+		for (int i = 0; i < m_inputFields.size(); i++) {
+			m_inputFields.at(i)->render(renderer);
+		}
 	}
 }
 
@@ -379,23 +404,28 @@ vector<Button*> DialogBox::getButtons() {
 	return m_buttons;
 }
 
-InputField* DialogBox::getInputField() {
-	return m_inputField;
+vector<InputField*> DialogBox::getInputFields() {
+	return m_inputFields;
 }
 
-void DialogBox::addInputField(SDL_Rect rectangle, string fontLocation, int fontSize) {
-	m_inputField = new InputField(SDL_Rect{ rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h });
-	m_inputField->setFont(fontLocation, fontSize);
+void DialogBox::addInputField(string id, string fileName, SDL_Rect rectangle, string fontLocation, int fontSize) {
+	m_inputFields.push_back(new InputField(id, SDL_Rect{ rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h }, fileName));
+	m_inputFields.at(m_inputFields.size() - 1)->setFont(fontLocation, fontSize);
 }
 
-void DialogBox::addInputFieldWithBorder(SDL_Rect rectangle, int thickness, SDL_Color borderColour, string fontLocation, int fontSize) {
-	m_inputField = new InputField(SDL_Rect{ rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h });
-	m_inputField->setFont(fontLocation, fontSize);
-	m_inputField->addBorder(thickness, borderColour);
+void DialogBox::addInputFieldWithBorder(string id, string fileName, SDL_Rect rectangle, int thickness, SDL_Color borderColour, string fontLocation, int fontSize) {
+	m_inputFields.push_back(new InputField(id, SDL_Rect{ rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h }, fileName));
+	m_inputFields.at(m_inputFields.size() - 1)->setFont(fontLocation, fontSize);
+	m_inputFields.at(m_inputFields.size() - 1)->addBorder(thickness, borderColour);
 }
 
-void DialogBox::removeInputField() {
-	delete m_inputField;
+void DialogBox::removeInputField(string id) {
+	for (int i = 0; i < m_inputFields.size(); i++) {
+		if (m_inputFields.at(i)->getID() == id) {
+			m_inputFields.erase(m_inputFields.begin() + i);
+			break;
+		}
+	}
 }
 
 void DialogBox::setWindowSize(int width, int height) {

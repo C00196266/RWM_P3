@@ -79,11 +79,11 @@ public:
 
 	vector<Button*> getButtons();
 
-	InputField* getInputField();
+	vector<InputField*> getInputFields();
 
-	void addInputField(SDL_Rect rectangle, string fontLocation, int fontSize);
-	void addInputFieldWithBorder(SDL_Rect rectangle, int thickness, SDL_Color borderColour, string fontLocation, int fontSize);
-	void removeInputField();
+	void addInputField(string id, string fileName, SDL_Rect rectangle, string fontLocation, int fontSize);
+	void addInputFieldWithBorder(string id, string fileName, SDL_Rect rectangle, int thickness, SDL_Color borderColour, string fontLocation, int fontSize);
+	void removeInputField(string id);
 
 	void setWindowSize(int width, int height);
 
@@ -107,7 +107,7 @@ private:
 	string m_message;
 
 	vector<Button*> m_buttons;
-	InputField *m_inputField;
+	vector<InputField*> m_inputFields;
 
 	int m_windowWidth;
 	int m_windowHeight;

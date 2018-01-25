@@ -11,14 +11,21 @@ using namespace std;
 class InputField {
 public:
 	InputField();
-	InputField(SDL_Rect rectangle);
+	InputField(string id, SDL_Rect rectangle, string fileName);
 
+	void update(SDL_Point eventPos);
 	void render(SDL_Renderer *renderer);
 
 	void setPos(SDL_Point pos);
 	void setPos(float x, float y);
 	SDL_Point getLocalPos(SDL_Point dialogBoxPos);
 	SDL_Point getGlobalPos();
+
+	void setID(string id);
+	string getID();
+
+	void setFileName(string fileName);
+	string getFileName();
 
 	void setX(float x);
 	float getX();
@@ -49,7 +56,13 @@ public:
 
 	void writeToFile();
 
+	void setSelected(bool selected);
+	bool getSelected();
+
 private:
+	string m_id;
+	string m_fileName;
+
 	SDL_Rect m_rect;
 	SDL_Color m_colour;
 
@@ -67,4 +80,6 @@ private:
 	int m_distFromBoxEdge;
 
 	string m_message;
+
+	bool m_selected;
 };

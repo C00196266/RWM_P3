@@ -12,9 +12,12 @@ InputField::InputField() {
 	m_fontPos = SDL_Point{ m_rect.x + m_distFromBoxEdge, m_rect.y + m_distFromBoxEdge };
 	m_borderAdded = false;
 	m_message = "";
+	m_id = "a";
+	m_fileName = "base.txt";
+	m_selected = false;
 }
 
-InputField::InputField(SDL_Rect rectangle) {
+InputField::InputField(string id, SDL_Rect rectangle, string fileName) {
 	m_rect = rectangle;
 	m_colour = SDL_Color{ 255, 255, 255, 255 };
 	m_font = NULL;
@@ -26,6 +29,18 @@ InputField::InputField(SDL_Rect rectangle) {
 	m_fontPos = SDL_Point{ m_rect.x + m_distFromBoxEdge, m_rect.y + m_distFromBoxEdge };
 	m_borderAdded = false;
 	m_message = "";
+	m_id = id;
+	m_fileName = fileName;
+	m_selected = false;
+}
+
+void InputField::update(SDL_Point eventPosition) {
+	if (SDL_PointInRect(&eventPosition, &m_rect) == true) {
+		m_selected = true;
+	}
+	else {
+		m_selected = false;
+	}
 }
 
 void InputField::render(SDL_Renderer *renderer) {
@@ -45,6 +60,22 @@ void InputField::render(SDL_Renderer *renderer) {
 	else {
 		SDL_RenderCopy(renderer, m_messageTexture, NULL, &m_fontRect);
 	}
+}
+
+void InputField::setID(string id) {
+	m_id = id;
+}
+
+string InputField::getID() {
+	return m_id;
+}
+
+void InputField::setFileName(string fileName) {
+	m_fileName = fileName;
+}
+
+string InputField::getFileName() {
+	return m_fileName;
 }
 
 void InputField::setPos(SDL_Point pos) {
@@ -169,11 +200,19 @@ void InputField::removeEndCharacter() {
 void InputField::writeToFile() {
 	ofstream output;
 
-	output.open("inputed_messages.txt", ofstream::out | ofstream::app);
+	output.open(m_fileName, ofstream::out | ofstream::app);
 
 	output << m_message << "\n";
 
 	output.close();
 
 	m_message.clear();
+}
+
+void InputField::setSelected(bool selected) {
+	m_selected = selected;
+}
+
+bool InputField::getSelected() {
+	return m_selected;
 }
