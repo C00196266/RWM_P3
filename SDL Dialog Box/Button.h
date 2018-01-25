@@ -40,6 +40,7 @@ public:
 	SDL_Point getFontGlobalPos();
 
 	void setMessage(string message);
+	void setMessage(string message, SDL_Renderer *renderer);
 	string getMessage();
 
 	void setMessageDistFromEdge(int dist, SDL_Renderer *renderer);

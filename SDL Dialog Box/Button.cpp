@@ -136,6 +136,12 @@ void Button::setMessage(string message) {
 	m_message = message;
 }
 
+
+void Button::setMessage(string message, SDL_Renderer *renderer) {
+	m_message = message;
+	generateFontSurface(renderer);
+}
+
 string Button::getMessage() {
 	return m_message;
 }

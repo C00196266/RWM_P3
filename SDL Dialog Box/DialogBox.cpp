@@ -75,6 +75,9 @@ void DialogBox::getInputs(SDL_Event &e, SDL_Renderer *renderer) {
 		}
 		break;
 
+	case SDL_FINGERUP:
+		m_eventPosition = { -100, -100 };
+
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&m_eventPosition.x, &m_eventPosition.y);
 
@@ -87,6 +90,9 @@ void DialogBox::getInputs(SDL_Event &e, SDL_Renderer *renderer) {
 		}
 
 		break;
+
+	case SDL_MOUSEBUTTONUP:
+		m_eventPosition = { -100, -100 };
 
 	case SDL_TEXTINPUT:
 		if (m_inputField != NULL) {
@@ -378,12 +384,12 @@ InputField* DialogBox::getInputField() {
 }
 
 void DialogBox::addInputField(SDL_Rect rectangle, string fontLocation, int fontSize) {
-	m_inputField = new InputField(rectangle);
+	m_inputField = new InputField(SDL_Rect{ rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h });
 	m_inputField->setFont(fontLocation, fontSize);
 }
 
 void DialogBox::addInputFieldWithBorder(SDL_Rect rectangle, int thickness, SDL_Color borderColour, string fontLocation, int fontSize) {
-	m_inputField = new InputField(rectangle);
+	m_inputField = new InputField(SDL_Rect{ rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h });
 	m_inputField->setFont(fontLocation, fontSize);
 	m_inputField->addBorder(thickness, borderColour);
 }
