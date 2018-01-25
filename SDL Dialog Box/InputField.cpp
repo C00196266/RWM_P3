@@ -16,7 +16,7 @@ InputField::InputField() {
 }
 
 InputField::InputField(SDL_Rect rectangle) {
-	m_rect = SDL_Rect{ 10, 20, 100, 100 };
+	m_rect = rectangle;
 	m_colour = SDL_Color{ 255, 255, 255, 255 };
 	m_font = NULL;
 	m_messageSurface = NULL;

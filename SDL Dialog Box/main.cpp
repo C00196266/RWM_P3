@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
 	dialogBox.addButtonWithBorder(SDL_Rect{ 10, 10, 50, 280 }, SDL_Color{ 0, 190, 90, 255 }, "it me weeg", "arial.ttf", 10, 1, SDL_Color{ 0, 0, 0, 255 });
 	dialogBox.setWindowSize(SDL_GetWindowSurface(window)->w, SDL_GetWindowSurface(window)->h);
 
-	dialogBox.addInputFieldWithBorder(SDL_Rect{ 200, 100, 260, 70 }, 1, SDL_Color{ 0, 0, 0, 255 }, "arial.ttf", 10);
+	dialogBox.addInputFieldWithBorder(SDL_Rect{ 300, 200, 260, 70 }, 1, SDL_Color{ 0, 0, 0, 255 }, "arial.ttf", 10);
 
 	bool running = true;
 
