@@ -73,9 +73,9 @@ public:
 	float getHeightWithBorder();
 
 	void addButton();
-	void addButton(SDL_Rect rectangle, SDL_Color colour, string message, string fontLocation, int fontSize);
-	void addButtonWithBorder(SDL_Rect rectangle, SDL_Color colour, string message, string fontLocation, int fontSize, int thickness, SDL_Color borderColour);
-	void removeButton(int id);
+	void addButton(string id, SDL_Rect rectangle, SDL_Color colour, string message, string fontLocation, int fontSize);
+	void addButtonWithBorder(string id, SDL_Rect rectangle, SDL_Color colour, string message, string fontLocation, int fontSize, int thickness, SDL_Color borderColour);
+	void removeButton(string id);
 
 	vector<Button*> getButtons();
 

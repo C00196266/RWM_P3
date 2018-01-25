@@ -1,6 +1,7 @@
 #include "Button.h"
 
 Button::Button() {
+	m_id = "";
 	m_rect = SDL_Rect{ 10, 20, 100, 100 };
 	m_colour = SDL_Color{ 205, 205, 205, 255 };
 	m_font = NULL;
@@ -14,7 +15,7 @@ Button::Button() {
 	m_pressed = false;
 }
 
-Button::Button(int id, SDL_Rect rectangle, SDL_Color boxColour) {
+Button::Button(string id, SDL_Rect rectangle, SDL_Color boxColour) {
 	m_id = id;
 	m_rect = rectangle;
 	m_colour = boxColour;
@@ -54,11 +55,11 @@ void Button::render(SDL_Renderer *renderer) {
 	}
 }
 
-void Button::setID(int id) {
+void Button::setID(string id) {
 	m_id = id;
 }
 
-int Button::getID() {
+string Button::getID() {
 	return m_id;
 }
 
@@ -112,35 +113,6 @@ float Button::getHeight() {
 	return m_rect.h;
 }
 
-//void Button::setButtonColour(SDL_Color colour) {
-//	m_colour = colour;
-//}
-//
-//void Button::setButtonColour(float r, float g, float b) {
-//	m_colour.r = r;
-//	m_colour.b = b;
-//	m_colour.g = g;
-//}
-//
-//void Button::setButtonColour(float r, float g, float b, float a) {
-//	m_colour.r = r;
-//	m_colour.b = b;
-//	m_colour.g = g;
-//	m_colour.a = a;
-//}
-
-//void Button::setButtonAlpha(float a) {
-//	m_colour.a = a;
-//}
-//
-//SDL_Color Button::getButtonColour() {
-//	return m_colour;
-//}
-
-//void Button::setFont(TTF_Font *font) {
-//	m_font = font;
-//}
-
 void Button::setFont(string fontFileLocation, float size) {
 	m_fontSize = size;
 
@@ -151,44 +123,6 @@ void Button::setFont(string fontFileLocation, float size) {
 		m_font = TTF_OpenFont(fontFileLocation.c_str(), m_fontSize);
 	}
 }
-
-//void Button::setFontSize(int size) {
-//	m_fontSize = size;
-//}
-//
-//void Button::setFontColour(SDL_Color colour) {
-//	m_fontColour = colour;
-//}
-//
-//void Button::setFontPos(SDL_Point pos) {
-//	m_fontPos = pos;
-//}
-//
-//void Button::setFontPos(float x, float y) {
-//	m_fontPos.x = x;
-//	m_fontPos.y = y;
-//}
-//
-//void Button::setFontColour(float r, float g, float b) {
-//	m_fontColour.r = r;
-//	m_fontColour.b = b;
-//	m_fontColour.g = g;
-//}
-//
-//void Button::setFontColour(float r, float g, float b, float a) {
-//	m_fontColour.r = r;
-//	m_fontColour.b = b;
-//	m_fontColour.g = g;
-//	m_fontColour.a = a;
-//}
-//
-//void Button::setFontAlpha(float a) {
-//	m_fontColour.a = a;
-//}
-
-//SDL_Color Button::getFontColour() {
-//	return m_fontColour;
-//
 
 SDL_Point Button::getFontLocalPos() {
 	return SDL_Point{ m_fontPos.x - m_rect.x, m_fontPos.y - m_rect.y };

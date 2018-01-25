@@ -10,15 +10,13 @@ using namespace std;
 class Button {
 public:
 	Button();
-	Button(int id, SDL_Rect rectangle, SDL_Color boxColour);
-	//Button(int id, SDL_Point position, float width, float height, SDL_Color boxColour);
-	//Button(int id, float x, float y, float width, float height, SDL_Color boxColour);
+	Button(string id, SDL_Rect rectangle, SDL_Color boxColour);
 
 	void update(SDL_Point eventPosition);
 	void render(SDL_Renderer *renderer);
 
-	void setID(int id);
-	int getID();
+	void setID(string id);
+	string getID();
 
 	void setPos(SDL_Point pos);
 	void setPos(float x, float y);
@@ -37,22 +35,7 @@ public:
 	void setHeight(float h);
 	float getHeight();
 
-	void setButtonColour(SDL_Color colour);
-	void setButtonColour(float r, float b, float g);
-	void setButtonColour(float r, float b, float g, float a);
-	void setButtonAlpha(float a);
-	SDL_Color getButtonColour();
-
-	void setFont(TTF_Font *font);
 	void setFont(string fontFileLocation, float size);
-	void setFontSize(int size);
-	void setFontPos(SDL_Point pos);
-	void setFontPos(float x, float y);
-	void setFontColour(SDL_Color colour);
-	void setFontColour(float r, float b, float g);
-	void setFontColour(float r, float b, float g, float a);
-	void setFontAlpha(float a);
-	SDL_Color getFontColour();
 	SDL_Point getFontLocalPos();
 	SDL_Point getFontGlobalPos();
 
@@ -76,7 +59,7 @@ public:
 	bool getPressed();
 
 private:
-	int m_id;
+	string m_id;
 
 	SDL_Rect m_rect;
 	SDL_Color m_colour;

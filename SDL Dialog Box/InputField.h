@@ -49,9 +49,6 @@ public:
 
 	void writeToFile();
 
-	//void setSelected(bool selected);
-	//bool getSelected();
-
 private:
 	SDL_Rect m_rect;
 	SDL_Color m_colour;
@@ -70,6 +67,4 @@ private:
 	int m_distFromBoxEdge;
 
 	string m_message;
-
-	bool m_selected;
 };

@@ -11,7 +11,6 @@ InputField::InputField() {
 	m_distFromBoxEdge = 2;
 	m_fontPos = SDL_Point{ m_rect.x + m_distFromBoxEdge, m_rect.y + m_distFromBoxEdge };
 	m_borderAdded = false;
-	m_selected = false;
 	m_message = "";
 }
 
@@ -26,7 +25,6 @@ InputField::InputField(SDL_Rect rectangle) {
 	m_distFromBoxEdge = 2;
 	m_fontPos = SDL_Point{ m_rect.x + m_distFromBoxEdge, m_rect.y + m_distFromBoxEdge };
 	m_borderAdded = false;
-	m_selected = false;
 	m_message = "";
 }
 
@@ -169,22 +167,13 @@ void InputField::removeEndCharacter() {
 }
 
 void InputField::writeToFile() {
-	fstream file;
+	ofstream output;
 
-	file.open("inputed_messages.txt");
+	output.open("inputed_messages.txt", ofstream::out | ofstream::app);
 
-	if (!file) {
-		ofstream output("inputed_messages.txt");
+	output << m_message << "\n";
 
-		output << m_message << "\n";
-
-		output.close();
-	}
-	else {
-		file << m_message << endl;;
-	}
-
-	file.close();
+	output.close();
 
 	m_message.clear();
 }

@@ -347,20 +347,20 @@ void DialogBox::addButton() {
 	m_buttons.push_back(new Button());
 }
 
-void DialogBox::addButton(SDL_Rect rectangle, SDL_Color boxColour, string message, string fontLocation, int fontSize) {
-	m_buttons.push_back(new Button(m_buttons.size(), SDL_Rect{ rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h }, boxColour));
+void DialogBox::addButton(string id, SDL_Rect rectangle, SDL_Color boxColour, string message, string fontLocation, int fontSize) {
+	m_buttons.push_back(new Button(id, SDL_Rect{ rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h }, boxColour));
 	m_buttons.at(m_buttons.size() - 1)->setFont(fontLocation, fontSize);
 	m_buttons.at(m_buttons.size() - 1)->setMessage(message);
 }
 
-void DialogBox::addButtonWithBorder(SDL_Rect rectangle, SDL_Color boxColour, string message, string fontLocation, int fontSize, int thickness, SDL_Color borderColour) {
-	m_buttons.push_back(new Button(m_buttons.size(), SDL_Rect{rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h }, boxColour));
+void DialogBox::addButtonWithBorder(string id, SDL_Rect rectangle, SDL_Color boxColour, string message, string fontLocation, int fontSize, int thickness, SDL_Color borderColour) {
+	m_buttons.push_back(new Button(id, SDL_Rect{rectangle.x + m_boxRectangle.x, rectangle.y + m_boxRectangle.y, rectangle.w, rectangle.h }, boxColour));
 	m_buttons.at(m_buttons.size() - 1)->setFont(fontLocation, fontSize);
 	m_buttons.at(m_buttons.size() - 1)->setMessage(message);
 	m_buttons.at(m_buttons.size() - 1)->addBorder(thickness, borderColour);
 }
 
-void DialogBox::removeButton(int id) {
+void DialogBox::removeButton(string id) {
 	for (int i = 0; i < m_buttons.size(); i++) {
 		if (m_buttons.at(i)->getID() == id) {
 			m_buttons.erase(m_buttons.begin() + i);
